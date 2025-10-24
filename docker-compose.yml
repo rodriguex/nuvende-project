@@ -1,0 +1,16 @@
+services:
+  app_nuvende:
+    build:
+      context: ./docker/php
+      args:
+        UID: ${UID}
+        GID: ${GID}
+    container_name: app_nuvende
+    restart: unless-stopped
+    volumes:
+      - .:/var/www/html
+    ports:
+      - "8000:8000"
+      - "5173:5173"
+    user: "${UID}:${GID}"
+    command: bash -c "composer install && composer run dev"
